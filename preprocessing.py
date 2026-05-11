@@ -14,28 +14,20 @@ def clean_text(text):
         return ""
 
     text = text.lower()
-
     # remove new lines
     text = text.replace("\n", " ")
-
     # remove unwanted words
     text = text.replace("unknown", " ")
-
     # remove currency patterns
     text = re.sub(r"\$[\d,]+\.?\d*", " amount ", text)
-
     # remove date patterns
     text = re.sub(r"\d{4}-\d{2}-\d{2}", " date ", text)
-
     # remove special symbols (# / \)
     text = re.sub(r"[#/\\]", " ", text)
-
     # keep only letters & numbers
     text = re.sub(r"[^a-z0-9 ]", " ", text)
-
     # remove extra spaces
     text = re.sub(r"\s+", " ", text)
-
     return text.strip()
 
 # =========================
@@ -47,13 +39,10 @@ def clean_amount(x):
             return None
 
         x = str(x)
-
         # remove commas
         x = x.replace(",", "")
-
         # keep numbers and dot only
         x = re.sub(r"[^0-9.]", "", x)
-
         # avoid multiple dots
         if x.count(".") > 1:
             return None
@@ -132,7 +121,7 @@ for item in dataset:
     amount = clean_amount(extracted.get("total_amount", ""))
 
     # =========================
-    # FILTER (مهم جدًا)
+    # FILTER
     # =========================
 
     if text == "":
@@ -194,7 +183,7 @@ train_df.to_csv("train.csv", index=False)
 val_df.to_csv("val.csv", index=False)
 test_df.to_csv("test.csv", index=False)
 
-# JSON كمان
+# JSON
 import json
 
 with open("train.json", "w", encoding="utf-8") as f:
@@ -206,7 +195,7 @@ with open("val.json", "w", encoding="utf-8") as f:
 with open("test.json", "w", encoding="utf-8") as f:
     json.dump(test_df.to_dict(orient="records"), f, indent=4, ensure_ascii=False)
 
-print("✅ Data split and saved successfully")
+print("Data split and saved successfully")
 
 # =========================
 # SAVE
@@ -216,4 +205,4 @@ df.to_csv("clean_invoice.csv", index=False)
 with open("clean_invoice.json", "w", encoding="utf-8") as f:
     json.dump(df.to_dict(orient="records"), f, indent=4, ensure_ascii=False)
 
-print("✅ Final Clean Data جاهزة 100%")
+print("Final Clean Data جاهزة 100%")
