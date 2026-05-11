@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+transformers
+peft
+torch
+pydantic
+python-multipart
+safetensors
